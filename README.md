@@ -19,7 +19,7 @@ Draw your blueprint beans!
 ### Generate image from many files without grouping by file
 
 ```
-./run.sh blueprintFile.xml --no-group-by-file
+./run.sh blueprintFile.xml other.xml --no-group-by-file
 ```
 
 ### Generate image with exclude beans
