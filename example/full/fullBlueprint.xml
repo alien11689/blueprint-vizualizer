@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+    <bean id="myBean5" class="org.apache.aries.blueprint.plugin.test.MyBean5" depends-on="myBean6">
+        <argument ref="my2"/>
+        <argument ref="my1"/>
+        <argument ref="serviceABImpl"/>
+        <argument value="100"/>
+        <argument ref="ser1"/>
+        <argument ref="ser2"/>
+        <argument ref="serviceAImplQualified"/>
+        <argument ref="produced2"/>
+    </bean>
+    <bean id="serviceAImpl3" class="org.apache.aries.blueprint.plugin.test.ServiceAImpl3"/>
+    <bean id="my1" class="org.apache.aries.blueprint.plugin.test.ServiceAImpl1" scope="prototype"/>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="serviceReferences" class="org.apache.aries.blueprint.plugin.test.ServiceReferences" ext:field-injection="true">
+        <property name="serviceB" ref="serviceB-typeB1"/>
+        <property name="serviceB2" ref="serviceB2Id"/>
+        <property name="serviceB3" ref="serviceB-typeB3"/>
+    </bean>
+    <bean id="serviceABImpl" class="org.apache.aries.blueprint.plugin.test.ServiceABImpl"/>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="myBean1" class="org.apache.aries.blueprint.plugin.test.MyBean1" ext:field-injection="true" init-method="init" destroy-method="destroy" activation="lazy">
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txNotSupported" value="NotSupported"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txNever" value="Never"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txRequired" value="Required"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txOverridenWithRequiresNew" value="RequiresNew"/>
+        <context xmlns="http://aries.apache.org/xmlns/jpa/v1.1.0" unitname="person" property="em"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="*" value="RequiresNew"/>
+        <unit xmlns="http://aries.apache.org/xmlns/jpa/v1.1.0" unitname="person" property="emf"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txSupports" value="Supports"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txMandatory" value="Mandatory"/>
+        <property name="bean2" ref="my1"/>
+    </bean>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="beanWithConfig" class="org.apache.aries.blueprint.plugin.test.BeanWithConfig" ext:field-injection="true">
+        <property name="title" value="$[title]"/>
+    </bean>
+    <bean id="producedWithConfigProperty" class="org.apache.aries.blueprint.plugin.test.MyProducedWithConstructor" factory-method="createBean" scope="prototype" factory-ref="beanWithConfig">
+        <argument value="1000"/>
+    </bean>
+    <bean id="referenceListenerListBean" class="org.apache.aries.blueprint.plugin.test.referencelistener.ReferenceListenerListBean"/>
+    <bean id="beanWithCallbackMethods" class="org.apache.aries.blueprint.plugin.test.bean.BeanWithCallbackMethods" depends-on="basicBean namedBean1" scope="prototype" init-method="init" destroy-method="destroy" activation="lazy"/>
+    <bean id="myFactoryBeanAsService" class="org.apache.aries.blueprint.plugin.test.MyFactoryBeanAsService"/>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="producedForServiceWithOneInterface" class="org.apache.aries.blueprint.plugin.test.MyProduced" ext:field-injection="true" factory-method="createBeanWithServiceExpose2" scope="prototype" activation="lazy" factory-ref="myFactoryBeanAsService">
+        <property name="serviceA" ref="my1"/>
+    </bean>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="producedForServiceWithTwoInterfaces" class="org.apache.aries.blueprint.plugin.test.MyProduced" ext:field-injection="true" factory-method="createBeanWithServiceExpose3" scope="prototype" activation="lazy" factory-ref="myFactoryBeanAsService">
+        <property name="serviceA" ref="my1"/>
+    </bean>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="producedForServiceWithProperties" class="org.apache.aries.blueprint.plugin.test.MyProduced" ext:field-injection="true" factory-method="createBeanWithServiceExpose4" scope="prototype" activation="lazy" factory-ref="myFactoryBeanAsService">
+        <property name="serviceA" ref="my1"/>
+    </bean>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="producedForService" class="org.apache.aries.blueprint.plugin.test.MyProduced" ext:field-injection="true" factory-method="createBeanWithServiceExpose1" scope="prototype" activation="lazy" factory-ref="myFactoryBeanAsService">
+        <property name="serviceA" ref="my1"/>
+    </bean>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="cdiTransactionalAnnotatedBean" class="org.apache.aries.blueprint.plugin.test.CdiTransactionalAnnotatedBean" ext:field-injection="true" init-method="init" destroy-method="destroy" activation="lazy">
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="*" value="RequiresNew"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txRequired" value="Required"/>
+        <context xmlns="http://aries.apache.org/xmlns/jpa/v1.1.0" unitname="person" property="em"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txMandatory" value="Mandatory"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txNever" value="Never"/>
+        <unit xmlns="http://aries.apache.org/xmlns/jpa/v1.1.0" unitname="person" property="emf"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txSupports" value="Supports"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txOverridenWithRequiresNew" value="RequiresNew"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txNotSupported" value="NotSupported"/>
+        <property name="bean2" ref="my1"/>
+    </bean>
+    <bean id="myFactory" class="org.apache.aries.blueprint.plugin.test.qualifiers.MyFactory"/>
+    <bean id="testBean1" class="org.apache.aries.blueprint.plugin.test.qualifiers.TestBean" factory-method="create1" factory-ref="myFactory"/>
+    <bean id="testBean2" class="org.apache.aries.blueprint.plugin.test.qualifiers.TestBean" factory-method="create2" factory-ref="myFactory"/>
+    <bean id="myBean7" class="org.apache.aries.blueprint.plugin.test.MyBean7">
+        <argument ref="serviceD"/>
+    </bean>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="myBean3" class="org.apache.aries.blueprint.plugin.test.MyBean3" ext:field-injection="true" scope="prototype">
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txNotSupported" value="NotSupported"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txRequiresNew" value="RequiresNew"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txNever" value="Never"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txRequired" value="Required"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txMandatory" value="Mandatory"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="*" value="RequiresNew"/>
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txSupports" value="Supports"/>
+        <property name="myProduced" ref="myProduced"/>
+        <property name="serviceA1" ref="my1"/>
+        <property name="serviceA2" ref="my2"/>
+        <property name="serviceB" ref="serviceABImpl"/>
+        <property name="serviceB2" ref="serviceB2Id"/>
+    </bean>
+    <bean id="referenceListenerBeanWithNameWithoutMethods" class="org.apache.aries.blueprint.plugin.test.referencelistener.ReferenceListenerBeanWithName" scope="prototype"/>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="myBean4" class="org.apache.aries.blueprint.plugin.test.MyBean4" ext:field-injection="true" depends-on="myBean5 myBean6">
+        <transaction xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0" method="txWithoutClassAnnotation" value="Supports"/>
+        <property name="bundleContext" ref="blueprintBundleContext"/>
+    </bean>
+    <bean id="referenceListenerBeanWithoutMethodsAnnotation" class="org.apache.aries.blueprint.plugin.test.referencelistener.ReferenceListenerBeanWithoutMethodsAnnotation"/>
+    <bean id="testConsumer" class="org.apache.aries.blueprint.plugin.test.qualifiers.TestConsumer">
+        <argument ref="testBean1"/>
+        <argument ref="testBean2"/>
+    </bean>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="my2" class="org.apache.aries.blueprint.plugin.test.ServiceAImpl2" ext:field-injection="true">
+        <property name="url" value="${url}"/>
+    </bean>
+    <bean id="serviceWithRanking" class="org.apache.aries.blueprint.plugin.test.ServiceWithRanking"/>
+    <bean id="myFactoryNamedBean" class="org.apache.aries.blueprint.plugin.test.MyFactoryNamedBean"/>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="produced1" class="org.apache.aries.blueprint.plugin.test.MyProduced" ext:field-injection="true" factory-method="createBean1" scope="prototype" activation="lazy" factory-ref="myFactoryNamedBean">
+        <property name="serviceA" ref="my1"/>
+    </bean>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="produced2" class="org.apache.aries.blueprint.plugin.test.MyProduced" ext:field-injection="true" depends-on="produced1" factory-method="createBean2" activation="lazy" factory-ref="myFactoryNamedBean">
+        <property name="serviceA" ref="my1"/>
+    </bean>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="producedEager" class="org.apache.aries.blueprint.plugin.test.MyProduced" ext:field-injection="true" factory-method="createBean2AsEager" activation="eager" factory-ref="myFactoryNamedBean">
+        <property name="serviceA" ref="my1"/>
+    </bean>
+    <bean id="referenceListenerProducer" class="org.apache.aries.blueprint.plugin.test.referencelistener.ReferenceListenerProducer"/>
+    <bean id="referenceListenerToProduceForSingle" class="org.apache.aries.blueprint.plugin.test.referencelistener.ReferenceListenerToProduce" factory-method="single" scope="prototype" factory-ref="referenceListenerProducer"/>
+    <bean id="referenceListenerToProduceWithBindingMethodsByName" class="org.apache.aries.blueprint.plugin.test.referencelistener.ReferenceListenerToProduce" factory-method="listWithDefinedMethods" factory-ref="referenceListenerProducer"/>
+    <bean id="referenceListenerToProduceForList" class="org.apache.aries.blueprint.plugin.test.referencelistener.ReferenceListenerToProduceWithoutAnnotation" factory-method="list" scope="prototype" factory-ref="referenceListenerProducer"/>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="myFactoryBean" class="org.apache.aries.blueprint.plugin.test.MyFactoryBean" ext:field-injection="true">
+        <property name="serviceB" ref="serviceABImpl"/>
+    </bean>
+    <bean id="myProducedWithConstructor" class="org.apache.aries.blueprint.plugin.test.MyProducedWithConstructor" factory-method="createBeanWithParameters" scope="prototype" factory-ref="myFactoryBean">
+        <argument ref="myBean1"/>
+        <argument value="100"/>
+        <argument ref="ser1"/>
+    </bean>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="myProduced" class="org.apache.aries.blueprint.plugin.test.MyProduced" ext:field-injection="true" factory-method="create" scope="prototype" activation="lazy" factory-ref="myFactoryBean">
+        <property name="serviceA" ref="my1"/>
+    </bean>
+    <bean id="beanWithSetters" class="org.apache.aries.blueprint.plugin.test.BeanWithSetters" activation="eager">
+        <property name="myValue" value="test"/>
+        <property name="serviceA1" ref="my1"/>
+        <property name="serviceA2" ref="my2"/>
+        <property name="serviceB" ref="serviceABImpl"/>
+        <property name="serviceB2" ref="serviceB2Id"/>
+        <property name="serviceB2Ref" ref="serviceB2IdRef"/>
+        <property name="serviceB3Ref" ref="serviceB-B3Ref"/>
+        <property name="serviceBRef" ref="serviceB-typeB1Ref"/>
+    </bean>
+    <bean id="serviceWithTypedParameters" class="org.apache.aries.blueprint.plugin.test.ServiceWithTypedParameters"/>
+    <bean id="myBean6" class="org.apache.aries.blueprint.plugin.test.MyBean6">
+        <argument ref="my2"/>
+    </bean>
+    <bean id="serviceAImplQualified" class="org.apache.aries.blueprint.plugin.test.ServiceAImplQualified"/>
+    <bean id="namedBean1" class="org.apache.aries.blueprint.plugin.test.bean.NamedBean" scope="prototype" activation="eager"/>
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="beanWithConfigurationProperties" class="org.apache.aries.blueprint.plugin.test.BeanWithConfigurationProperties" ext:field-injection="true">
+        <argument ref="testProps5"/>
+        <argument ref="properties-aries-test6-false"/>
+        <property name="prop1" ref="properties-aries-test1-true"/>
+        <property name="prop2" ref="testProps2"/>
+        <property name="prop3" ref="properties-aries-test3-true"/>
+        <property name="prop4" ref="testProps4"/>
+        <property name="prop7" ref="properties-aries-test7-false"/>
+    </bean>
+    <bean id="withProperties8" class="org.apache.aries.blueprint.plugin.test.MyProducedWithConstructor" factory-method="createBeanWithProperties8" scope="prototype" factory-ref="beanWithConfigurationProperties">
+        <argument ref="properties-aries-test8-false"/>
+    </bean>
+    <bean id="withProperties9" class="org.apache.aries.blueprint.plugin.test.MyProducedWithConstructor" factory-method="createBeanWithProperties9" scope="prototype" factory-ref="beanWithConfigurationProperties">
+        <argument ref="testProps9"/>
+    </bean>
+    <bean id="basicBean" class="org.apache.aries.blueprint.plugin.test.bean.BasicBean"/>
+    <bean id="simpleProducedBean1" class="org.apache.aries.blueprint.plugin.test.bean.SimpleProducedBean" factory-method="getBean1" factory-ref="basicBean"/>
+    <bean id="simpleProducedBean2" class="org.apache.aries.blueprint.plugin.test.bean.SimpleProducedBean" factory-method="getBean2" scope="prototype" activation="eager" factory-ref="basicBean"/>
+    <bean id="simpleProducedBean3" class="org.apache.aries.blueprint.plugin.test.bean.SimpleProducedBean" depends-on="simpleProducedBean1 simpleProducedBean2" factory-method="getBean3" scope="prototype" init-method="init1" destroy-method="destroy1" activation="lazy" factory-ref="basicBean"/>
+    <service ref="producedForServiceWithOneInterface" interface="org.apache.aries.blueprint.plugin.test.MyProduced"/>
+    <service ref="my2" interface="org.apache.aries.blueprint.plugin.test.ServiceA"/>
+    <property-placeholder xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0" persistent-id="org.apache.aries.my" placeholder-prefix="$[" placeholder-suffix="]" update-strategy="reload">
+        <default-properties>
+            <property name="title" value="My Title"/>
+            <property name="test2" value="v2"/>
+        </default-properties>
+    </property-placeholder>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="properties-aries-test3-true" persistent-id="aries.test3" update="true"/>
+    <reference id="serviceB2IdRef" interface="org.apache.aries.blueprint.plugin.test.ServiceB" filter="(type=B2Ref)"/>
+    <reference id="ser2" interface="org.apache.aries.blueprint.plugin.test.ServiceC" filter="(mode=123)"/>
+    <reference interface="org.apache.aries.blueprint.plugin.test.ServiceA" availability="optional" id="serviceAReferenceWithoutMethods">
+        <reference-listener ref="referenceListenerBeanWithNameWithoutMethods"/>
+    </reference>
+    <reference id="ser1" interface="org.apache.aries.blueprint.plugin.test.ServiceC" component-name="myRef"/>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="properties-aries-test7-false" persistent-id="aries.test7" update="false"/>
+    <reference id="serviceD" interface="org.apache.aries.blueprint.plugin.test.ServiceD"/>
+    <reference id="serviceB-B3Ref" interface="org.apache.aries.blueprint.plugin.test.ServiceB" component-name="B3Ref"/>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="properties-aries-test1-true" persistent-id="aries.test1" update="true"/>
+    <service ref="serviceAImpl3" auto-export="interfaces"/>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="testProps2" persistent-id="aries.test2" update="false"/>
+    <reference id="serviceB-typeB1" interface="org.apache.aries.blueprint.plugin.test.ServiceB" filter="(type=B1)"/>
+    <service ref="serviceWithTypedParameters" auto-export="interfaces">
+        <service-properties>
+            <entry key="test1" value="test"/>
+            <entry key="test2">
+                <value type="java.lang.Integer">15</value>
+            </entry>
+            <entry key="test3">
+                <value type="java.lang.Boolean">true</value>
+            </entry>
+            <entry key="test4">
+                <array>
+                    <value>val1</value>
+                    <value>val2</value>
+                </array>
+            </entry>
+            <entry key="test5">
+                <array value-type="java.lang.Short">
+                    <value>1</value>
+                    <value>2</value>
+                    <value>3</value>
+                </array>
+            </entry>
+            <entry key="test6">
+                <array value-type="java.lang.Double">
+                    <value>1.5</value>
+                    <value>0.8</value>
+                    <value>-7.1</value>
+                </array>
+            </entry>
+        </service-properties>
+    </service>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="testProps4" persistent-id="aries.test4" update="false"/>
+    <reference id="serviceB-typeB3" interface="org.apache.aries.blueprint.plugin.test.ServiceB" filter="(type=B3)"/>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="testProps5" persistent-id="aries.test5" update="true"/>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="testProps9" persistent-id="aries.test9" update="true"/>
+    <example xmlns="http://exampleNamespace" id="p2" value="v2"/>
+    <reference interface="org.apache.aries.blueprint.plugin.test.ServiceB" availability="optional" id="serviceB-producer123-b123" filter="(b=123)" component-name="producer123">
+        <reference-listener ref="referenceListenerToProduceForSingle" bind-method="register" unbind-method="unregister"/>
+    </reference>
+    <example xmlns="http://exampleNamespace" id="p1" value="v1"/>
+    <reference-list interface="org.apache.aries.blueprint.plugin.test.ServiceB" availability="mandatory" id="serviceBList">
+        <reference-listener ref="referenceListenerToProduceWithBindingMethodsByName" bind-method="addMe" unbind-method="removeMe"/>
+    </reference-list>
+    <reference id="serviceB2Id" interface="org.apache.aries.blueprint.plugin.test.ServiceB" filter="(type=B2)"/>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="properties-aries-test6-false" persistent-id="aries.test6" update="false"/>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="properties-aries-test8-false" persistent-id="aries.test8" update="false"/>
+    <service ref="serviceABImpl">
+        <interfaces>
+            <value>org.apache.aries.blueprint.plugin.test.ServiceA</value>
+            <value>org.apache.aries.blueprint.plugin.test.ServiceB</value>
+        </interfaces>
+    </service>
+    <reference-list interface="org.apache.aries.blueprint.plugin.test.ServiceB" availability="optional" id="referenceListForProducer" filter="(b=456)" component-name="producer456">
+        <reference-listener ref="referenceListenerToProduceForList" bind-method="addMe" unbind-method="removeMe"/>
+    </reference-list>
+    <service ref="producedForService" auto-export="interfaces"/>
+    <service ref="producedForServiceWithProperties" auto-export="interfaces" ranking="100">
+        <service-properties>
+            <entry key="n1" value="v1"/>
+            <entry key="n2" value="v2"/>
+        </service-properties>
+    </service>
+    <reference-list interface="org.apache.aries.blueprint.plugin.test.ServiceA" availability="optional" id="serviceAReference">
+        <reference-listener ref="referenceListenerBeanWithoutMethodsAnnotation" bind-method="addMe" unbind-method="removeMe"/>
+    </reference-list>
+    <service ref="producedForServiceWithTwoInterfaces">
+        <interfaces>
+            <value>org.apache.aries.blueprint.plugin.test.MyProduced</value>
+            <value>org.apache.aries.blueprint.plugin.test.ServiceA</value>
+        </interfaces>
+    </service>
+    <service ref="serviceWithRanking" auto-export="interfaces" ranking="100">
+        <service-properties/>
+    </service>
+    <reference-list interface="org.apache.aries.blueprint.plugin.test.ServiceA" availability="mandatory" id="serviceAList-a-bc" filter="(b=c)" component-name="a">
+        <reference-listener ref="referenceListenerListBean" bind-method="add" unbind-method="remove"/>
+    </reference-list>
+    <enable-annotations xmlns="http://aries.apache.org/xmlns/transactions/v1.2.0"/>
+    <reference id="serviceB-typeB1Ref" interface="org.apache.aries.blueprint.plugin.test.ServiceB" filter="(type=B1Ref)"/>
+</blueprint>

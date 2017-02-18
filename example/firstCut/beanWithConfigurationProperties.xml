@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+    <bean xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" id="beanWithConfigurationProperties" class="org.apache.aries.blueprint.plugin.test.BeanWithConfigurationProperties" ext:field-injection="true">
+      <argument ref="testProps5"/>
+      <argument ref="properties-aries-test6-false"/>
+      <property name="prop1" ref="properties-aries-test1-true"/>
+      <property name="prop2" ref="testProps2"/>
+      <property name="prop3" ref="properties-aries-test3-true"/>
+      <property name="prop4" ref="testProps4"/>
+      <property name="prop7" ref="properties-aries-test7-false"/>
+    </bean>
+    <bean id="withProperties8" class="org.apache.aries.blueprint.plugin.test.MyProducedWithConstructor" factory-method="createBeanWithProperties8" scope="prototype" factory-ref="beanWithConfigurationProperties">
+      <argument ref="properties-aries-test8-false"/>
+    </bean>
+    <bean id="withProperties9" class="org.apache.aries.blueprint.plugin.test.MyProducedWithConstructor" factory-method="createBeanWithProperties9" scope="prototype" factory-ref="beanWithConfigurationProperties">
+      <argument ref="testProps9"/>
+    </bean>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="properties-aries-test6-false" persistent-id="aries.test6" update="false"/>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="properties-aries-test8-false" persistent-id="aries.test8" update="false"/>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="properties-aries-test3-true" persistent-id="aries.test3" update="true"/>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="properties-aries-test7-false" persistent-id="aries.test7" update="false"/>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="properties-aries-test1-true" persistent-id="aries.test1" update="true"/>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="testProps2" persistent-id="aries.test2" update="false"/>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="testProps4" persistent-id="aries.test4" update="false"/>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="testProps5" persistent-id="aries.test5" update="true"/>
+    <cm-properties xmlns="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0" id="testProps9" persistent-id="aries.test9" update="true"/>
+
+</blueprint>
